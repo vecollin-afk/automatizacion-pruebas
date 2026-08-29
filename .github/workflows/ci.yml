@@ -32,3 +32,8 @@ jobs:
             target/surefire-reports/
             target/reports/surefire.html
             target/cucumber-report.html
+
+      - name: Simular alerta ante fallos
+        if: failure()
+        run: |
+          echo "ALERTA: Se detectaron fallos en las pruebas. Notificar al equipo QA y Desarrollo."
