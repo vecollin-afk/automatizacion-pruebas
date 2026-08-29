@@ -31,4 +31,4 @@ jobs:
           path: |
             target/surefire-reports/
             target/reports/surefire.html
-	    target/cucumber-report.html
+            target/cucumber-report.html
