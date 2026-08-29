@@ -97,6 +97,7 @@ performance/
 .github/workflows/
 
 └── ci.yml
+```
 
 Archivos principales:
 
