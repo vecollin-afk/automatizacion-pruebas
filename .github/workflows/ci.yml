@@ -33,6 +33,9 @@ jobs:
             target/reports/surefire.html
             target/cucumber-report.html
 
+      - name: Simular fallo controlado
+        run: exit 1
+
       - name: Simular alerta ante fallos
         if: failure()
         run: |
