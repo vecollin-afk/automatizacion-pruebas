@@ -566,4 +566,24 @@ Con este proyecto se implementó un flujo completo de automatización de pruebas
 
 La automatización permite detectar errores de forma temprana, mantener trazabilidad de los cambios y entregar al equipo información clara sobre el estado de las pruebas antes de incorporar modificaciones a la rama principal.
 
+## Evidencias
 
+### Pipeline final en GitHub Actions
+
+![Pipeline final](evidencias/01_pipeline_final.png)
+
+### Reporte BDD con Cucumber
+
+![Reporte BDD](evidencias/02_reporte_bdd.png)
+
+### Dashboard de performance con JMeter
+
+![Dashboard JMeter](evidencias/03_dashboard_jmeter.png)
+
+### Simulación de alerta ante fallos
+
+![Alerta automática](evidencias/04_alerta_fallo.png)
+
+### Ejecución local de pruebas
+
+![Pruebas locales](evidencias/05_pruebas_locales.png)
