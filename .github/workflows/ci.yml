@@ -1,13 +1,6 @@
 name: CI - Pruebas Java
 
-on:
-  push:
-    branches:
-      - main
-
-  pull_request:
-    branches:
-      - main
+on: [push, pull_request]
 
 jobs:
   pruebas:
@@ -38,3 +31,4 @@ jobs:
           path: |
             target/surefire-reports/
             target/reports/surefire.html
+            target/cucumber-report.html
