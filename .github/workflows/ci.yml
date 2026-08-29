@@ -2,13 +2,7 @@ name: CI - Pruebas Java
 
 on:
   push:
-    branches:
-      - main
-
   pull_request:
-    branches:
-      - main
-
 jobs:
   pruebas:
     runs-on: ubuntu-latest
