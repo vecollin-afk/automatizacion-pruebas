@@ -27,6 +27,9 @@ jobs:
       - name: Ejecutar pruebas con Maven
         run: mvn -B test
 
+      - name: Generar reporte HTML
+        run: mvn surefire-report:report
+
       - name: Guardar resultados de las pruebas
         if: always()
         uses: actions/upload-artifact@v4
