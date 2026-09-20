@@ -4,6 +4,7 @@ Feature: Consulta de saldo
   Quiero consultar el saldo de mi cuenta
   Para conocer el dinero disponible
 
+  @acceptance
   Scenario: Consulta de saldo de una cuenta activa
     Given que existe una cuenta activa con saldo de 100000
     When el usuario consulta el saldo

@@ -1,0 +1,68 @@
+name: Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - feature/deployment-pipeline
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Build del proyecto
+        run: mvn -B compile
+
+      - name: Ejecutar Acceptance Test Gate
+        run: mvn -B test "-Dtest=RunCucumberTest" "-Dcucumber.filter.tags=@acceptance"
+
+      - name: Preparar ambiente de prueba
+        run: mvn -B package -DskipTests
+
+      - name: Desplegar en ambiente de prueba
+        run: |
+          java -cp target/classes cl.automatizacion.ServidorSaldo > servidor.log 2>&1 &
+          echo $! > servidor.pid
+          sleep 5
+
+      - name: Validar despliegue
+        run: |
+          RESPUESTA=$(curl -s http://localhost:8080/saldo)
+          echo "Respuesta del ambiente de prueba: $RESPUESTA"
+
+          if [ "$RESPUESTA" != "SALDO DISPONIBLE: 100000" ]; then
+            echo "El despliegue no responde correctamente"
+            exit 1
+          fi
+
+          echo "Despliegue validado correctamente"
+    
+      - name: Simular rollback ante fallo
+        if: failure()
+        run: |
+          echo "ROLLBACK: Se detecto un fallo en el despliegue."
+          echo "Se restaura la ultima version estable."
+          if [ -f servidor.pid ]; then
+            kill $(cat servidor.pid) || true
+          fi
+
+      - name: Detener ambiente de prueba
+        if: always()
+        run: |
+          if [ -f servidor.pid ]; then
+            kill $(cat servidor.pid) || true
+          fi
+          echo "Ambiente de prueba detenido."
