@@ -588,3 +588,47 @@ La automatización permite detectar errores de forma temprana, mantener trazabil
 ### Ejecución local de pruebas
 
 ![Pruebas locales](evidencias/05_pruebas_locales.png)
+
+## Prueba de integración
+
+Se agregó una prueba de integración para validar la consulta de saldo mediante una petición HTTP real.
+
+La prueba levanta el servidor, consulta el endpoint `/saldo` y verifica que la respuesta sea correcta, tanto en el código HTTP como en el saldo entregado.
+
+La ejecución completa se realiza con:
+
+mvn test
+
+Actualmente el proyecto ejecuta pruebas unitarias, de integración y escenarios BDD con Cucumber.
+
+### Evidencia de prueba de integración
+
+![Prueba de integración](evidencias/06_prueba_integracion.png)
+
+## Deployment Pipeline
+
+Se agregó un pipeline de despliegue separado en:
+
+.github/workflows/deployment.yml
+
+El flujo realiza las siguientes etapas:
+
+- Build del proyecto.
+- Acceptance Test Gate.
+- Preparación del ambiente de prueba.
+- Despliegue del servicio.
+- Validación del despliegue.
+- Rollback ante fallos.
+- Limpieza del ambiente de prueba.
+
+El Acceptance Test Gate ejecuta solamente los escenarios marcados con la etiqueta `@acceptance`.
+
+Para validar el rollback se realizó un fallo controlado. Al detectar el error, el pipeline ejecutó correctamente el paso de rollback y posteriormente se retiró el fallo artificial, dejando el mecanismo activo.
+
+### Evidencia de deployment exitoso
+
+![Deployment exitoso](evidencias/07_deployment_exitoso.png)
+
+### Evidencia de rollback
+
+![Rollback](evidencias/08_rollback.png)
