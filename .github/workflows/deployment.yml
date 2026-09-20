@@ -49,6 +49,9 @@ jobs:
           fi
 
           echo "Despliegue validado correctamente"
+    
+      - name: Simular fallo controlado de despliegue
+        run: exit 1
 
       - name: Simular rollback ante fallo
         if: failure()
